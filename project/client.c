@@ -6,7 +6,7 @@
 /*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 01:20:42 by zsonie            #+#    #+#             */
-/*   Updated: 2025/03/19 21:52:09 by zsonie           ###   ########.fr       */
+/*   Updated: 2025/03/21 01:21:38 by zsonie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	send_message(int pid, char *message)
 			else
 				kill(pid, SIGUSR1);
 			j++;
-			usleep(100);
+			usleep(500);
 		}
 		i++;
 	}
@@ -51,7 +51,6 @@ int main(int ac, char **av)
 {
 	if (ac != 3)
 		return (0);
-	message_lenght = strlen(av[2]) * 8;
 	send_message(atoi(av[1]), av[2]);
 	end_of_transmission(atoi(av[1]));
 }

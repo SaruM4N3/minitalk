@@ -6,7 +6,7 @@
 #    By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/03/19 01:32:46 by zsonie           ###   ########.fr        #
+#    Updated: 2025/03/21 01:40:37 by zsonie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 SRC_CLIENT = client.c
-SRC_SERVER = server.c
+SRC_SERVER = server.c \
+			ft_itoa.c
 
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
