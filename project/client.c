@@ -23,19 +23,20 @@ static void	send_message(int pid, char *message)
 	i = 0;
 	while (message[i])
 	{
-		j = 0;
-		while (j < 8)
+		j = 7;
+		while (j >= 0)
 		{
 			if (message[i] & (1 << j))
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			j++;
+			j--;
 			usleep(500);
 		}
 		i++;
 	}
 }
+
 static void end_of_transmission(int pid)
 {
 	int i = 0;

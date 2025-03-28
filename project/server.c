@@ -11,31 +11,36 @@
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 int	fullsignal;
 
 static void	print_user_message(int sig)
 {
-	fullsignal = fullsignal << 1;
+	static int	bit_count = 0;
+	bool debug = false;
+
 	if (sig == SIGUSR2)
+		fullsignal |= (1 << (7 - bit_count));
+	else
+		fullsignal &= ~(1 << (7 - bit_count));
+	bit_count++;
+
+	if (debug)
 	{
-		fullsignal = fullsignal | 1;
+		printf("Signal received: %s, fullsignal: %d, bit_count: %d\n",
+			(sig == SIGUSR1) ? "SIGUSR1" : "SIGUSR2", fullsignal, bit_count);
 	}
-	if (strlen(ft_itoa(fullsignal)) == 8)
+	if (bit_count == 8)
 	{
-		write(1, "enter", 5);
-		if (!strchr(ft_itoa(fullsignal), '1'))
-			write(1, "end", 3);
+		char c = (char)fullsignal;
+		if (c == '\0')
+			write(1, "\n", 1);
 		else
 		{
-			write(1, "\n", 1);
-			write(1, &fullsignal, 1);
+			write(1, &c, 1);
 		}
-		fullsignal = 0;	
+		fullsignal = 0;
+		bit_count = 0;
 	}
 }
 
@@ -45,21 +50,17 @@ static void	print_PID(void)
 
 	pid = getpid();
 	printf("SERVER PID: %d\n", pid);
-	write(1, "\n", 1);
 }
 
 int	main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
-	
 	print_PID();
 	while (1)
 	{
 		signal(SIGUSR1, print_user_message);
 		signal(SIGUSR2, print_user_message);
-		// signal(SIGUSR1, print_letter);
-		// signal(SIGUSR2, print_letter);
 		
 		pause();
 	}
