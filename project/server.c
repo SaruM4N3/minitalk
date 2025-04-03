@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsonie <zsonie@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 01:20:39 by zsonie            #+#    #+#             */
-/*   Updated: 2025/04/03 11:47:13 by zsonie           ###   ########.fr       */
+/*   Updated: 2025/04/03 22:39:08 by zsonie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
+#include <signal.h>
+#include <sched.h>
 
 int			fullsignal;
 

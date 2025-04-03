@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsonie <zsonie@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 01:20:42 by zsonie            #+#    #+#             */
-/*   Updated: 2025/04/03 12:02:32 by zsonie           ###   ########.fr       */
+/*   Updated: 2025/04/03 22:30:02 by zsonie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
-#define _XOPEN_SOURCE 700
-
 #include "inc/minitalk.h"
 #include <time.h>
+# include <signal.h>
+#include <bits/sigaction.h>
+#include <asm-generic/signal-defs.h>
 
 static volatile int	ack_received = 0;
 
@@ -25,7 +25,7 @@ static void	wait_for_acknowledgment(void)
 	timeout = 10000;
 	while (!ack_received)
 	{
-		usleep(1);
+		usleep(100);
 		timeout -= 100;
 		if (timeout <= 0)
 		{
