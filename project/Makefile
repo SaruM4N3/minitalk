@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+         #
+#    By: zsonie <zsonie@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/03/21 01:40:37 by zsonie           ###   ########.fr        #
+#    Updated: 2025/04/03 10:34:11 by zsonie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CLIENT = client
 SERVER = server
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -std=c99
 RM = rm -f
 
 SRC_CLIENT = client.c
