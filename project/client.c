@@ -3,44 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saru <saru@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 01:20:42 by zsonie            #+#    #+#             */
-/*   Updated: 2025/04/03 22:30:02 by zsonie           ###   ########.fr       */
+/*   Updated: 2025/04/06 21:13:29 by saru             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
-#include <time.h>
-# include <signal.h>
-#include <bits/sigaction.h>
-#include <asm-generic/signal-defs.h>
 
-static volatile int	ack_received = 0;
+static volatile int	g_ack_received = 0;
 
 static void	wait_for_acknowledgment(void)
 {
-	int	timeout;
+	int	timeout_count;
 
-	timeout = 10000;
-	while (!ack_received)
+	timeout_count = 0;
+	while (!g_ack_received)
 	{
 		usleep(100);
-		timeout -= 100;
-		if (timeout <= 0)
+		timeout_count += 1;
+		if (timeout_count >= 10000)
 		{
 			write(2, "Error: Acknowledgment timeout\n", 30);
 			exit(1);
 		}
 	}
-	ack_received = 0;
+	g_ack_received = 0;
 }
 
 static void	ack_handler(int sig)
 {
-	(void)sig;
-	write(1, "Acknowledgment received\n", 24);
-	ack_received = 1;
+	(void) sig;
+	g_ack_received = 1;
 }
 
 static void	send_message(int pid, char *message)
@@ -58,7 +53,10 @@ static void	send_message(int pid, char *message)
 			{
 				if (kill(pid, SIGUSR2) == -1)
 					exit(1);
-				else if (kill(pid, SIGUSR1) == -1)
+			}
+			else
+			{
+				if (kill(pid, SIGUSR1) == -1)
 					exit(1);
 			}
 			wait_for_acknowledgment();
@@ -94,9 +92,10 @@ int	main(int ac, char **av)
 		write(2, "Usage: ./client <PID> <message>\n", 32);
 		return (1);
 	}
-	// Set up acknowledgment signal handler
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
 	sa.sa_handler = ack_handler;
-	sa.sa_flags = SA_RESTART | SA_NODEFER;
 	sigaction(SIGUSR1, &sa, NULL);
 	send_message(atoi(av[1]), av[2]);
 	end_of_transmission(atoi(av[1]));

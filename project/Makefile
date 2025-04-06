@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+         #
+#    By: saru <saru@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/04/03 22:26:12 by zsonie           ###   ########.fr        #
+#    Updated: 2025/04/06 19:29:29 by saru             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT = client
 SERVER = server
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
