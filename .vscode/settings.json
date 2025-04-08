@@ -61,7 +61,9 @@
     "stdbool.h": "c",
     "signal.h": "c",
     "unistd.h": "c",
-    "sched.h": "c"
+    "sched.h": "c",
+    "string.h": "c",
+    "ft_printf.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

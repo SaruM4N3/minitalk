@@ -6,20 +6,27 @@
 #    By: saru <saru@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/04/06 19:29:29 by saru             ###   ########.fr        #
+#    Updated: 2025/04/08 17:33:27 by saru             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT = client
 SERVER = server
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g3
 RM = rm -f
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c \
-			ft_itoa.c
+SRC_CLIENT = src/client.c \
+			src/utils.c \
+			src/utils2.c
+
+SRC_SERVER = src/server.c \
+			src/utils.c \
+			src/utils2.c \
+			src/printf/ft_printf_parse.c \
+			src/printf/ft_printf_utils.c \
+			src/printf/ft_printf.c
 
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ_SERVER = $(SRC_SERVER:.c=.o)

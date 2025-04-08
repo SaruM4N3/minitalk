@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-static int	ft_calc_len(int n)
+static int	ft_intlen(int n)
 {
 	int	len;
 
@@ -29,13 +29,23 @@ static int	ft_calc_len(int n)
 	return (len);
 }
 
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
 char	*ft_itoa(int n)
 {
 	char			*res;
 	int				len;
 	unsigned int	num;
 
-	len = ft_calc_len(n);
+	len = ft_intlen(n);
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
@@ -53,10 +63,15 @@ char	*ft_itoa(int n)
 	return (res);
 }
 
-// int	main(int ac, char **av)
-// {
-// 	(void) ac;
-// 	__builtin_printf("%s\n",ft_itoa(0));
-// 	__builtin_printf("%s\n",ft_itoa(-0));
-// 	return (0);
-// }
+void	*ft_bzero(void *s, size_t n)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *) s)[i] = 0;
+		i++;
+	}
+	return (s);
+}
