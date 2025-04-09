@@ -6,15 +6,15 @@
 #    By: saru <saru@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/04/08 17:33:27 by saru             ###   ########.fr        #
+#    Updated: 2025/04/09 13:15:18 by saru             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT = client
 SERVER = server
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 SRC_CLIENT = src/client.c \
