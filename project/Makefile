@@ -3,23 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+         #
+#    By: saru <saru@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 01:21:19 by zsonie            #+#    #+#              #
-#    Updated: 2025/04/03 22:26:12 by zsonie           ###   ########.fr        #
+#    Updated: 2025/04/09 13:15:18 by saru             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT = client
 SERVER = server
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c \
-			ft_itoa.c
+SRC_CLIENT = src/client.c \
+			src/utils.c \
+			src/utils2.c
+
+SRC_SERVER = src/server.c \
+			src/utils.c \
+			src/utils2.c \
+			src/printf/ft_printf_parse.c \
+			src/printf/ft_printf_utils.c \
+			src/printf/ft_printf.c
 
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ_SERVER = $(SRC_SERVER:.c=.o)

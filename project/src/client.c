@@ -6,41 +6,40 @@
 /*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 01:20:42 by zsonie            #+#    #+#             */
+<<<<<<< HEAD:project/client.c
 /*   Updated: 2025/04/03 23:00:56 by zsonie           ###   ########.fr       */
+=======
+/*   Updated: 2025/04/11 16:54:00 by zsonie           ###   ########.fr       */
+>>>>>>> 43d5b5eba50ba6b6de7a0db53d5abec68aed6e88:project/src/client.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minitalk.h"
-#include <time.h>
-# include <signal.h>
-#include <bits/sigaction.h>
-#include <asm-generic/signal-defs.h>
+#include "../inc/minitalk.h"
 
-static volatile int	ack_received = 0;
+static volatile int	g_ack_received = 0;
 
 static void	wait_for_acknowledgment(void)
 {
-	int	timeout;
+	int	timeout_count;
 
-	timeout = 10000;
-	while (!ack_received)
+	timeout_count = 0;
+	while (!g_ack_received)
 	{
 		usleep(100);
-		timeout -= 100;
-		if (timeout <= 0)
+		timeout_count += 1;
+		if (timeout_count >= MAX_TIMEOUT_ACK)
 		{
 			write(2, "Error: Acknowledgment timeout\n", 30);
 			exit(1);
 		}
 	}
-	ack_received = 0;
+	g_ack_received = 0;
 }
 
 static void	ack_handler(int sig)
 {
-	(void)sig;
-	write(1, "Acknowledgment received\n", 24);
-	ack_received = 1;
+	(void) sig;
+	g_ack_received = 1;
 }
 
 static void	send_message(int pid, char *message)
@@ -58,7 +57,10 @@ static void	send_message(int pid, char *message)
 			{
 				if (kill(pid, SIGUSR2) == -1)
 					exit(1);
-				else if (kill(pid, SIGUSR1) == -1)
+			}
+			else
+			{
+				if (kill(pid, SIGUSR1) == -1)
 					exit(1);
 			}
 			wait_for_acknowledgment();
@@ -88,17 +90,24 @@ static void	end_of_transmission(int pid)
 int	main(int ac, char **av)
 {
 	struct sigaction	sa;
+	char				*len;
 
-	if (ac != 3)
-	{
-		write(2, "Usage: ./client <PID> <message>\n", 32);
+	if (!err_handlr(ac, av))
 		return (1);
+	else
+	{
+		sigemptyset(&sa.sa_mask);
+		sigaddset(&sa.sa_mask, SIGUSR1);
+		sigaddset(&sa.sa_mask, SIGUSR2);
+		sa.sa_handler = ack_handler;
+		sigaction(SIGUSR1, &sa, NULL);
+		len = ft_itoa(ft_strlen(av[2]));
+		if (!len)
+			return (-1);
+		send_message(ft_atoi(av[1]), len);
+		send_message(ft_atoi(av[1]), "!");
+		send_message(ft_atoi(av[1]), av[2]);
+		end_of_transmission(ft_atoi(av[1]));
+		return (0);
 	}
-	// Set up acknowledgment signal handler
-	sa.sa_handler = ack_handler;
-	sa.sa_flags = SA_RESTART | SA_NODEFER;
-	sigaction(SIGUSR1, &sa, NULL);
-	send_message(atoi(av[1]), av[2]);
-	end_of_transmission(atoi(av[1]));
-	return (0);
 }
