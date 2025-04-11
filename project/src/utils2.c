@@ -2,17 +2,21 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/11/19 19:06:04 by zsonie            #+#    #+#             */
 /*   Updated: 2024/11/24 17:44:44 by zsonie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minitalk.h"
 #include <limits.h>
 #include <stddef.h>
-#include "../inc/minitalk.h"
+
 
 static void	ft_space_and_sign_increment(const char *str, size_t *i, int *sign)
 {
@@ -30,9 +34,9 @@ static void	ft_space_and_sign_increment(const char *str, size_t *i, int *sign)
 
 int	ft_atoi(const char *str)
 {
-	size_t	i;
-	long	num;
-	int		sign;
+	size_t i;
+	long num;
+	int sign;
 
 	num = 0;
 	ft_space_and_sign_increment(str, &i, &sign);
@@ -57,11 +61,29 @@ int	ft_atoi(const char *str)
 	return (num * sign);
 }
 
+static bool	ft_isdigit(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!(str[i] >= 48 && str[i] <= 57))
+			return (false);
+	}
+	return (true);
+}
+
 bool	err_handlr(int ac, char **av)
 {
 	if (ac != 3)
 	{
 		write(2, "Usage: ./client <PID> <message>\n", 32);
+		return (false);
+	}
+	if (ft_atoi(av[1]) <= 0 || !ft_isdigit(av[1]) || ft_atoi(av[1]) > MAX_PID)
+	{
+		write(2, "Correct PID needed!", 20);
 		return (false);
 	}
 	if (ft_strlen(av[2]) > MAX_MESSAGE_LENGTH)

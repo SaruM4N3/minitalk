@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saru <saru@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: zsonie <zsonie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 01:41:52 by zsonie            #+#    #+#             */
-/*   Updated: 2025/04/08 17:43:38 by saru             ###   ########.fr       */
+/*   Updated: 2025/04/12 01:28:54 by zsonie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define MAX_MESSAGE_LENGTH 65000
 # define MAX_TIMEOUT_ACK 10000
+# define MAX_PID 2147483647
 
 # include <unistd.h>
 # include <stdbool.h>
