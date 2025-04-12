@@ -17,7 +17,6 @@
 #include <limits.h>
 #include <stddef.h>
 
-
 static void	ft_space_and_sign_increment(const char *str, size_t *i, int *sign)
 {
 	*i = 0;
@@ -34,9 +33,9 @@ static void	ft_space_and_sign_increment(const char *str, size_t *i, int *sign)
 
 int	ft_atoi(const char *str)
 {
-	size_t i;
-	long num;
-	int sign;
+	size_t	i;
+	long	num;
+	int		sign;
 
 	num = 0;
 	ft_space_and_sign_increment(str, &i, &sign);
@@ -63,7 +62,7 @@ int	ft_atoi(const char *str)
 
 static bool	ft_isdigit(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])
